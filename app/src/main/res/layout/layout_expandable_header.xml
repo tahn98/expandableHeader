@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="parent"
+            type="com.example.settingappdemo.widget.ExpandableHeader" />
+
+        <variable
+            name="isExpanded"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:paddingHorizontal="@dimen/dimen_24">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="@{() -> parent.onExpand()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@color/cardview_dark_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_marginLeft="@dimen/dimen_8"
+            android:text="Client"
+            app:layout_constraintBottom_toBottomOf="@id/imAvatar"
+            app:layout_constraintStart_toEndOf="@id/imAvatar"
+            app:layout_constraintTop_toTopOf="@id/imAvatar"
+            tools:text="Client" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imExpandable"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@{safeUnbox(isExpanded) == true ? @drawable/ic_icon_arrow_up : @drawable/ic_icon_arrow_down}"
+            app:layout_constraintBottom_toBottomOf="@id/imAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imAvatar" />
+
+        <LinearLayout
+            android:id="@+id/llSubClientList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:visibility="@{safeUnbox(isExpanded) == true ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/imAvatar" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/llSubClientList" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
