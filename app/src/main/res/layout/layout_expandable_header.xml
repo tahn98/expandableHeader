@@ -9,11 +9,15 @@
 
         <variable
             name="parent"
-            type="com.example.settingappdemo.widget.ExpandableHeader" />
+            type="com.example.settingappdemo.widget.CustomExpandableHeader" />
 
         <variable
             name="isExpanded"
             type="boolean" />
+
+        <variable
+            name="client"
+            type="com.example.settingappdemo.model.Client" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,12 +42,23 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCharacterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{client.firstNameCharacter}"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@id/imAvatar"
+            app:layout_constraintEnd_toEndOf="@id/imAvatar"
+            app:layout_constraintStart_toStartOf="@id/imAvatar"
+            app:layout_constraintTop_toTopOf="@id/imAvatar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8"
             android:layout_marginLeft="@dimen/dimen_8"
-            android:text="Client"
+            android:text="@{client.name}"
             app:layout_constraintBottom_toBottomOf="@id/imAvatar"
             app:layout_constraintStart_toEndOf="@id/imAvatar"
             app:layout_constraintTop_toTopOf="@id/imAvatar"

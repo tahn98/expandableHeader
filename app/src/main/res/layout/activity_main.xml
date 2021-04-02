@@ -9,11 +9,12 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <com.example.settingappdemo.widget.ExpandableHeader
-            android:id="@+id/expHeader"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvSetting"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
