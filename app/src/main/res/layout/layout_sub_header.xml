@@ -1,48 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingHorizontal="10dp">
 
-    <data>
+    <com.example.settingappdemo.widget.CustomAvatarUser
+        android:id="@+id/ctAvatar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <variable
-            name="client"
-            type="com.example.settingappdemo.model.Client" />
-    </data>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_8"
+        android:text="Client"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ctAvatar"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imAvatar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@color/cardview_dark_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{client.firstNameCharacter}"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/imAvatar"
-            app:layout_constraintEnd_toEndOf="@id/imAvatar"
-            app:layout_constraintStart_toStartOf="@id/imAvatar"
-            app:layout_constraintTop_toTopOf="@id/imAvatar" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_8"
-            android:text="Client"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imAvatar"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@{client.name}" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

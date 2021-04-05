@@ -46,6 +46,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.HeaderView
 
         public void bind(List<Client> clientList){
             binding.expHeader.setClientList(clientList);
+            binding.executePendingBindings();
         }
     }
 }

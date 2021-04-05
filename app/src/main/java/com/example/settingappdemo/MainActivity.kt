@@ -24,16 +24,29 @@ class MainActivity : AppCompatActivity() {
     )
 
     private val settingList: MutableList<Setting> = mutableListOf(
+        Setting("st0", "", null, SETTING_LINE_TYPE),
         Setting("st1", "Cài Đặt Chung", null, SETTING_TITLE_TYPE),
         Setting("st2", "Trang cá nhân", "Mọi thông tin giám sát và bảo mật", SETTING_ITEM_TYPE),
         Setting("st3", "Hộp Thư", "Kiểm tra mọi tin nhắn quan trọng", SETTING_ITEM_TYPE),
-        Setting("st4", "", null, SETTING_LINE_TYPE)
+        Setting("st4", "", null, SETTING_LINE_TYPE),
+        Setting("st5", "Quản lý chung", null, SETTING_TITLE_TYPE),
+        Setting("st6", "Quản lý địa điểm", "Quản lý tất cả địa điểm của tôi cùng lúc", SETTING_ITEM_TYPE),
+        Setting("st7", "Dịch vụ clound", "Dịch vụ clound để tăng cường giám sát", SETTING_ITEM_TYPE),
+        Setting("st8", "Danh sách mã", "Mã khả dụng của bạn", SETTING_ITEM_TYPE),
+        Setting("st9", "Quản lý thiết bị kết nối", "Kết nối nhiều thiết bị hơn", SETTING_ITEM_TYPE),
+        Setting("st10", "", null, SETTING_LINE_TYPE),
+        Setting("st11", "Khác", null, SETTING_TITLE_TYPE),
+        Setting("st12", "Cài đặt ứng dụng", "Tùy chỉnh ứng dụng theo mong muốn của bạn", SETTING_ITEM_TYPE),
+        Setting("st13", "Hỗ trợ", "Hỏi và trả lời", SETTING_ITEM_TYPE),
+        Setting("st14", "Về chúng tôi", "Hiểu thêm về chúng tôi", SETTING_ITEM_TYPE),
+        Setting("st15", "Đăng xuất", "Bạn muốn đăng xuất tài khoản này?", SETTING_ITEM_TYPE),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         headerAdapter = HeaderAdapter(clientList)
         settingAdapter = SettingAdapter(settingList)

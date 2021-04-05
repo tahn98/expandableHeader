@@ -77,6 +77,7 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void bind(Setting setting) {
             this.binding.setSetting(setting);
+            binding.executePendingBindings();
         }
     }
 
@@ -91,6 +92,7 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void bind(Setting setting) {
             this.binding.setSetting(setting);
+            binding.executePendingBindings();
         }
     }
 

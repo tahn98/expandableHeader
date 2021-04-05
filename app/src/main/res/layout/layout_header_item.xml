@@ -4,9 +4,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_24">
 
         <com.example.settingappdemo.widget.CustomExpandableHeader
+            android:animateLayoutChanges="true"
             android:id="@+id/expHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
