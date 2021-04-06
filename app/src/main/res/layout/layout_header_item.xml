@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/dimen_24">
+        android:paddingHorizontal="@dimen/dimen_24"
+        android:layout_marginBottom="@dimen/dimen_8">
 
-        <com.example.settingappdemo.widget.CustomExpandableHeader
-            android:animateLayoutChanges="true"
-            android:id="@+id/expHeader"
+        <View
+            android:id="@+id/vTouch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/ctAvatar"
+            app:layout_constraintTop_toTopOf="@id/ctAvatar" />
 
+        <com.example.settingappdemo.widget.CustomAvatarUser
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/ctAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_marginLeft="@dimen/dimen_8"
+            app:layout_constraintBottom_toBottomOf="@id/ctAvatar"
+            app:layout_constraintStart_toEndOf="@id/ctAvatar"
+            app:layout_constraintTop_toTopOf="@id/ctAvatar"
+            tools:text="Client" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:src="@drawable/ic_icon_arrow_down"
+            android:id="@+id/imExpandable"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/ctAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ctAvatar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
