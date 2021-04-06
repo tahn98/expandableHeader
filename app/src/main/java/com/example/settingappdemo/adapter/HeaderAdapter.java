@@ -1,9 +1,12 @@
 package com.example.settingappdemo.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,14 +14,9 @@ import com.example.settingappdemo.databinding.LayoutHeaderItemBinding;
 import com.example.settingappdemo.databinding.LayoutSubHeaderBinding;
 import com.example.settingappdemo.model.Client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    public static final int HEADER_TYPE = 0;
-    public static final int SUB_ITEM_TYPE = 1;
-
     private List<Client> clientList;
     private OnItemHeaderClickListener listener;
     private Boolean isExpanded = false;
@@ -30,36 +28,18 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == HEADER_TYPE) {
-            LayoutHeaderItemBinding binding = LayoutHeaderItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new HeaderViewHolder(binding);
-        } else {
-            LayoutSubHeaderBinding binding = LayoutSubHeaderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new HeaderSubViewHolder(binding);
-        }
+        LayoutHeaderItemBinding binding = LayoutHeaderItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new HeaderViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder) holder).bind(clientList, listener, isExpanded);
-        } else {
-            ((HeaderSubViewHolder) holder).bind(clientList.get(position));
-        }
+        ((HeaderViewHolder) holder).bind(clientList, listener, isExpanded, position);
     }
 
     @Override
     public int getItemCount() {
         return clientList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return HEADER_TYPE;
-        } else {
-            return SUB_ITEM_TYPE;
-        }
     }
 
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -70,31 +50,38 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.binding = binding;
         }
 
-        public void bind(List<Client> clientList, OnItemHeaderClickListener listener, boolean isExpanded) {
-            Client client = clientList.get(0);
-            binding.ctAvatar.setCharacterName(client.getFirstNameCharacter());
-            binding.ctAvatar.setBackgroundAvatar();
-            binding.ctAvatar.setIsChecked();
-            binding.tvName.setText(client.getName());
-            binding.vTouch.setOnClickListener(view -> {
-                listener.onItemHeaderClick();
-            });
-            binding.executePendingBindings();
-        }
-    }
+        public void bind(List<Client> clientList, OnItemHeaderClickListener listener, boolean isExpanded, int position) {
+            if(position == 0){
+                Client client = clientList.get(0);
+                binding.ctAvatar.setCharacterName(client.getFirstNameCharacter());
+                binding.ctAvatar.setBackgroundAvatar();
+                binding.ctAvatar.setIsChecked(true);
+                binding.tvName.setText(client.getName());
+                binding.vTouch.setOnClickListener(view -> {
+                    listener.onItemHeaderClick();
+                });
+                binding.executePendingBindings();
+            }else{
+                Client client = clientList.get(position);
+                binding.ctAvatar.setCharacterName(client.getFirstNameCharacter());
+                binding.ctAvatar.setBackgroundAvatar();
+                binding.tvName.setText(client.getName());
+                binding.ctAvatar.setIsChecked(false);
+                binding.imExpandable.setVisibility(View.GONE);
+                ViewGroup.LayoutParams layoutParams = binding.ctAvatar.getLayoutParams();
+                layoutParams.width = 80;
+                layoutParams.height = 80;
+                binding.ctAvatar.setLayoutParams(layoutParams);
 
-    public static class HeaderSubViewHolder extends RecyclerView.ViewHolder {
-        private LayoutSubHeaderBinding binding;
+                ConstraintLayout constraintLayout = binding.headerRoot;
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(constraintLayout);
+                constraintSet.connect(binding.ctAvatar.getId(), ConstraintSet.START, binding.headerRoot.getId(), ConstraintSet.START, 34);
+                constraintSet.applyTo(constraintLayout);
 
-        public HeaderSubViewHolder(LayoutSubHeaderBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
+                binding.executePendingBindings();
 
-        public void bind(Client client) {
-            binding.ctAvatar.setCharacterName(client.getFirstNameCharacter());
-            binding.tvName.setText(client.getName());
-            binding.ctAvatar.setBackgroundAvatar();
+            }
         }
     }
 

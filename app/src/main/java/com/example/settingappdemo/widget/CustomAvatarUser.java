@@ -56,8 +56,12 @@ public class CustomAvatarUser extends ConstraintLayout {
         background.setBackground(drawable);
     }
 
-    public void setIsChecked(){
-        imChecked.setVisibility(VISIBLE);
+    public void setIsChecked(boolean checked){
+        if(checked){
+            imChecked.setVisibility(VISIBLE);
+        }else{
+            imChecked.setVisibility(GONE);
+        }
     }
 
     public int getRandomColor() {
