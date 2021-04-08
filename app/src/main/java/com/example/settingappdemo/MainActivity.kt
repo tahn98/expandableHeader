@@ -1,6 +1,8 @@
 package com.example.settingappdemo
 
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.MergeAdapter
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var isExpanded: Boolean = false
 
     private val clientList: MutableList<Client> = mutableListOf(
-        Client("1", "Gia Dinh"),
+        Client("1", "Gia Dinh", true),
         Client("2", "Công ty TNHH MTV"),
         Client("3", "Công ty TNHH TMA")
     )
@@ -74,15 +76,37 @@ class MainActivity : AppCompatActivity() {
             initClientList
         )
         headerAdapter.setOnItemHeaderClickListener(object : OnItemHeaderClickListener {
-            override fun onItemHeaderClick() {
-                toggle()
-                val view = binding.rcvSetting.layoutManager?.findViewByPosition(0)
-                view?.findViewById<AppCompatImageView>(R.id.imExpandable)?.setImageResource(
-                    if (isExpanded) R.drawable.ic_icon_arrow_up else R.drawable.ic_icon_arrow_down
-                )
-            }
+            override fun onItemHeaderClick(position: Int) {
+                if(position == 0){
+                    toggle()
+                    val view = binding.rcvSetting.layoutManager?.findViewByPosition(0)
+                    view?.findViewById<AppCompatImageView>(R.id.imExpandable)?.setImageResource(
+                        if (isExpanded) R.drawable.ic_icon_arrow_up else R.drawable.ic_icon_arrow_down
+                    )
+                }
 
+                else{
+                    val tmp = arrayListOf<Client>().apply {
+                        addAll(clientList.map { client -> client.copy(id = client.id, name = client.name, isChecked = client.isChecked) })
+                    }
+
+                    for (i in tmp.indices) {
+                        tmp[i].isChecked = i == position
+                    }
+
+                    val indexClient = tmp.indexOfFirst { client -> client.isChecked }
+                    val client = tmp[indexClient]
+                    tmp.removeAt(indexClient)
+                    tmp.add(0, client)
+
+                    headerAdapter.setClientList(tmp)
+                    clientList.clear()
+                    clientList.addAll(tmp)
+                    headerAdapter.notifyDataSetChanged()
+                }
+            }
         })
+
         settingAdapter = SettingAdapter(settingList)
         mergeSettingAdapter = MergeAdapter(headerAdapter, settingAdapter)
         binding.rcvSetting.adapter = mergeSettingAdapter
@@ -91,7 +115,9 @@ class MainActivity : AppCompatActivity() {
     fun toggle() {
         if (isExpanded) {
             headerAdapter.setClientList(
-                initClientList
+                mutableListOf(
+                    clientList.find { client -> client.isChecked }
+                )
             )
         } else {
             headerAdapter.setClientList(
@@ -102,4 +128,6 @@ class MainActivity : AppCompatActivity() {
         headerAdapter.setIsExpanded(isExpanded)
     }
 
+    private fun setCheckedForClientList(position: Int) {
+    }
 }

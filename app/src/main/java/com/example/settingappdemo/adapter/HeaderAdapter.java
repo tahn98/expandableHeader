@@ -11,18 +11,20 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.settingappdemo.databinding.LayoutHeaderItemBinding;
-import com.example.settingappdemo.databinding.LayoutSubHeaderBinding;
 import com.example.settingappdemo.model.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Client> clientList;
+    private List<Client> clientList = new ArrayList<>();
     private OnItemHeaderClickListener listener;
     private Boolean isExpanded = false;
 
     public HeaderAdapter(List<Client> clientList) {
-        this.clientList = clientList;
+//        this.clientList = clientList
+        this.clientList.clear();
+        this.clientList.addAll(clientList);
     }
 
     @NonNull
@@ -51,18 +53,15 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         public void bind(List<Client> clientList, OnItemHeaderClickListener listener, boolean isExpanded, int position) {
-            if(position == 0){
-                Client client = clientList.get(0);
+            Client client;
+            if (position == 0) {
+                client = clientList.get(0);
                 binding.ctAvatar.setCharacterName(client.getFirstNameCharacter());
                 binding.ctAvatar.setBackgroundAvatar();
                 binding.ctAvatar.setIsChecked(true);
                 binding.tvName.setText(client.getName());
-                binding.vTouch.setOnClickListener(view -> {
-                    listener.onItemHeaderClick();
-                });
-                binding.executePendingBindings();
-            }else{
-                Client client = clientList.get(position);
+            } else {
+                client = clientList.get(position);
                 binding.ctAvatar.setCharacterName(client.getFirstNameCharacter());
                 binding.ctAvatar.setBackgroundAvatar();
                 binding.tvName.setText(client.getName());
@@ -79,9 +78,11 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 constraintSet.connect(binding.ctAvatar.getId(), ConstraintSet.START, binding.headerRoot.getId(), ConstraintSet.START, 34);
                 constraintSet.applyTo(constraintLayout);
 
-                binding.executePendingBindings();
-
             }
+            binding.vTouch.setOnClickListener(view -> {
+                listener.onItemHeaderClick(position);
+            });
+            binding.executePendingBindings();
         }
     }
 
@@ -91,11 +92,12 @@ public class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void setClientList(List<Client> clientList) {
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new ClientListDiffUtilCallBack(this.clientList, clientList));
+        this.clientList.clear();
+        this.clientList.addAll(clientList);
         result.dispatchUpdatesTo(this);
-        this.clientList = clientList;
     }
 
-    public void setIsExpanded(Boolean isExpanded){
+    public void setIsExpanded(Boolean isExpanded) {
         this.isExpanded = isExpanded;
     }
 }

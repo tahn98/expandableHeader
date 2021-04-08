@@ -1,5 +1,5 @@
 package com.example.settingappdemo.adapter
 
 interface OnItemHeaderClickListener {
-    fun onItemHeaderClick()
+    fun onItemHeaderClick(position: Int)
 }
