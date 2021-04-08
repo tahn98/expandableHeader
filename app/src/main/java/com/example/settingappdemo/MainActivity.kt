@@ -13,6 +13,7 @@ import com.example.settingappdemo.adapter.SettingAdapter.*
 import com.example.settingappdemo.databinding.ActivityMainBinding
 import com.example.settingappdemo.model.Client
 import com.example.settingappdemo.model.Setting
+import java.text.FieldPosition
 
 class MainActivity : AppCompatActivity() {
 
@@ -84,25 +85,8 @@ class MainActivity : AppCompatActivity() {
                         if (isExpanded) R.drawable.ic_icon_arrow_up else R.drawable.ic_icon_arrow_down
                     )
                 }
-
                 else{
-                    val tmp = arrayListOf<Client>().apply {
-                        addAll(clientList.map { client -> client.copy(id = client.id, name = client.name, isChecked = client.isChecked) })
-                    }
-
-                    for (i in tmp.indices) {
-                        tmp[i].isChecked = i == position
-                    }
-
-                    val indexClient = tmp.indexOfFirst { client -> client.isChecked }
-                    val client = tmp[indexClient]
-                    tmp.removeAt(indexClient)
-                    tmp.add(0, client)
-
-                    headerAdapter.setClientList(tmp)
-                    clientList.clear()
-                    clientList.addAll(tmp)
-                    headerAdapter.notifyDataSetChanged()
+                    swapSubItemToHeaderItem(position)
                 }
             }
         })
@@ -128,6 +112,17 @@ class MainActivity : AppCompatActivity() {
         headerAdapter.setIsExpanded(isExpanded)
     }
 
-    private fun setCheckedForClientList(position: Int) {
+    fun swapSubItemToHeaderItem(position: Int){
+        for (i in clientList.indices) {
+            clientList[i].isChecked = i == position
+        }
+
+        val indexClient = clientList.indexOfFirst { client -> client.isChecked }
+        val client = clientList[indexClient]
+        clientList.removeAt(indexClient)
+        clientList.add(0, client)
+
+        headerAdapter.setClientList(clientList)
+        headerAdapter.notifyDataSetChanged()
     }
 }
